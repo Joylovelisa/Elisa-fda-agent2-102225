@@ -1,0 +1,8 @@
+altair
+pandas
+streamlit
+google-generativeai
+PyMuPDF
+pyyaml
+plotly
+xai_sdk
