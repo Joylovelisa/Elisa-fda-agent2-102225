@@ -168,25 +168,23 @@ DEFAULT_SAMPLE_JSON = [
 PROVIDERS = {
     "openai": {
         "env_key": "OPENAI_API_KEY",
-        "models": ["gpt-4o-mini", "gpt-4-turbo", "gpt-3.5-turbo"]
+        "models": ["gpt-4o-mini", "gpt-4.1-mini", "gpt-5-nano"]
     },
     "gemini": {
         "env_key": "GEMINI_API_KEY",
-        "models": ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-1.0-pro"]
+        "models": ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash"]
     },
     "grok": {
         "env_key": "GROK_API_KEY",
-        "models": ["llama3-8b-8192", "llama3-70b-8192", "mixtral-8x7b-32768"]
+        "models": ["grok-4-fast-reasoning", "grok-4-non-reasoning", "grok-3-mini"]
     }
 }
 
 DEFAULT_AGENTS_YAML = """agents:
   - name: Summarizer
-    provider: openai
-    model: gpt-4o-mini
     description: Summarize dataset entries into a concise executive overview.
     system_prompt: |
-      You are a helpful data analyst. Provide a concise, accurate summary of the provided data.
+      You are a helpful data analyst. Provide a comprehensive summary in markdown of the provided data. Please also create 10 comprehensive data visualization suggestions (including sample python code)
     user_prompt: |
       Summarize the following dataset. Focus on key entities and themes.
       Dataset preview (first 5 rows):
@@ -198,8 +196,6 @@ DEFAULT_AGENTS_YAML = """agents:
       force_json: false
 
   - name: JSON Converter
-    provider: gemini
-    model: gemini-1.5-flash
     description: Converts the summary into a structured JSON object.
     system_prompt: |
       You are a helpful NLP assistant. Your task is to convert the user's text into a structured JSON format.
@@ -214,11 +210,9 @@ DEFAULT_AGENTS_YAML = """agents:
       force_json: true
 
   - name: Final Reviewer
-    provider: grok
-    model: llama3-8b-8192
     description: Reviews the structured JSON and provides a final comment.
     system_prompt: |
-      You are Grok, an intelligent quality assurance agent.
+      You are an intelligent quality assurance agent.
       Review the provided JSON and give a brief, one-sentence comment on its quality.
     user_prompt: |
       Review this JSON and provide a final quality comment.
